@@ -14,7 +14,7 @@ _Last updated: 2026-10-08_
 1. Wait for the thrusters; bench test them with the props in water.
 2. Decide the pack: 2× Auline 21700 S70 6S 4500 mAh in parallel (AliExpress), or a no-BMS Molicel P42A 6S2P (Akita or DIY). See [docs/02](docs/02-brushless-upgrade.md).
 3. Weigh the stock battery; do the bath/ballast hull test.
-4. Design the printed thruster mounts (20 mm hole spacing) and a taller battery lid, in [designs/](designs/).
+4. **Thruster mounts: version 1 designed** ([designs/thruster-mount](designs/thruster-mount/)), not yet printed. Next: print the two fit tests and check the `VERIFY` values (are the thruster's 3 mm holes threaded? lamp nut size, hull wall, 50 mm of flat hull, duct outside diameter). Buy M10 × 1 hollow lamp tube and nuts. Still to design: the taller battery lid.
 5. Fit the PM06; configure the Rover parameters and battery failsafe ([docs/03](docs/03-ardupilot-setup.md)); build the LED indicator ([docs/04](docs/04-battery-led-indicator.md)).
 
 ## Open questions

@@ -9,7 +9,8 @@ About **1 m/s loaded outbound** (now about 0.7 m/s) so the fishing lines sag les
 Brushless, ducted, 4-blade, CW/CCW pair:
 
 - **480 Kv**, 12-24 V, 13 A, 30-200 W, about **2 kg thrust each at 24 V**
-- 162 g each, 75 mm long, **62 mm diameter** (duct opening measured 2026-10-08), **20 mm mounting-hole spacing**, 250 mm leads
+- 162 g each, 75 mm long, **62 mm diameter** (duct opening measured 2026-10-08), 250 mm leads
+- Mounting: **three 3 mm holes in a straight line along the top, 20 mm apart** (Cobus, 2026-10-08). Threaded or plain not yet checked. The [thruster mount](../designs/thruster-mount/) uses the outer pair.
 
 A different listing, [KINGMODEL 4000074645091](https://www.aliexpress.com/item/4000074645091.html), was looked at on 2026-10-08. It describes 1000 KV / 20 A / 74 mm thrusters with a PLA shell and a semi-submersible prop. The 62 mm measurement shows these are not those thrusters, so ignore that listing's figures.
 
