@@ -4,7 +4,7 @@ Printed parts for the upgrade, printed on the K1C (220 × 220 × 250 mm bed). Ke
 
 Parts (the SketchUp parts are all printed and in use; **eSUN PLA+** unless noted):
 
-- **[Thruster mounts](thruster-mount/):** version 1 designed 2026-10-08, not yet printed. A pylon on a steel M10 lamp tube through the stock motor-post hole.
+- **[Thruster mounts](thruster-mount/):** **v2** designed 2026-10-09, not yet printed: a base screwed to the hull's 4 existing posts, plus a carrier that holds the thruster and slides in from the stern. (v1, the lamp-tube pylon, is shelved.)
 - **[Cable holders](cable-holders/):** glued inside the hull to keep signal and power cables apart, plus the receiver antenna tube (90 degrees). SketchUp; STL only.
 - **[Servo parts](servo-parts/):** hopper servo horn for the replacement metal-geared servos. SketchUp; STL only.
 - **[Pixhawk bed](pixhawk-bed/):** locates the flight controller and receiver, held with a Velcro strap. SketchUp; STL only.

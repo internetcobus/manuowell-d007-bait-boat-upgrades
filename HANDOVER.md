@@ -1,6 +1,6 @@
 # Handover: current state
 
-_Last updated: 2026-10-08_
+_Last updated: 2026-10-09_
 
 ## Where things stand
 
@@ -14,7 +14,7 @@ _Last updated: 2026-10-08_
 1. Wait for the thrusters; bench test them with the props in water.
 2. Decide the pack: 2× Auline 21700 S70 6S 4500 mAh in parallel (AliExpress), or a no-BMS Molicel P42A 6S2P (Akita or DIY). See [docs/02](docs/02-brushless-upgrade.md).
 3. Weigh the stock battery; do the bath/ballast hull test.
-4. **Thruster mounts: moving to v2** (2026-10-09). With the stock pods off, the hull turns out to have a moulded tunnel per motor, flat flanges with 4 existing holes, and matching flat flanges with 4 pins inside ([photos](designs/thruster-mount/photos/)). v2: a printed ABS saddle bolted through those holes to a backing plate inside, bedded in thickened epoxy, with the old post hole used for the wires only. v1 (the lamp-tube pylon) is shelved. **Waiting on Cobus's measurements 1-19** ([measurement sheet](designs/thruster-mount/measure/)) and on check A: is the line across the tunnel a crack? Still to design: the taller battery lid.
+4. **Thruster mounts: v2 designed** (2026-10-09, [designs/thruster-mount](designs/thruster-mount/)), not yet printed. A base screwed to the hull's 4 existing posts (ST2.9 × 13) and a dovetail carrier that holds the thruster (3 × M4 into the tapped foot) and slides in from the stern, locked by one M3 × 40 from the outboard side. Left and right versions. **Next (2026-10-09): Cobus is printing `v2_template` and `v2_fit_dovetail_right`** (the fit test in ABS, the same as the real parts). Then adjust from his results; check the rail position, the wire hole size and the depth of the foot holes; buy the screws. Still to design: the taller battery lid.
 5. **SketchUp parts added 2026-10-08** (STL only): [cable holders](designs/cable-holders/), [servo parts](designs/servo-parts/), [Pixhawk bed](designs/pixhawk-bed/), [GPS antenna spacer](designs/gps-antenna-spacer/). All printed and in use: eSUN PLA+, except the GPS spacers in solid TPU-95. Purposes recorded 2026-10-09; the receiver antenna tube moved to `cable-holders/`. Still to do: add the `.skp` files beside the STLs.
 6. Fit the PM06; configure the Rover parameters and battery failsafe ([docs/03](docs/03-ardupilot-setup.md)); build the LED indicator ([docs/04](docs/04-battery-led-indicator.md)).
 
