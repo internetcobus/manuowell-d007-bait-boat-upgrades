@@ -4,9 +4,11 @@ Drawn by Cobus in SketchUp during the upgrade. Added 2026-10-08 from `Servo Part
 
 ![Servo parts](renders/servo-parts.png)
 
-## Status
+## What it's for
 
-**What it's for, and whether it's printed and fitted: not yet recorded.**
+**Servo horn that opens and locks the bait hoppers.** The stock hopper servos were continuous-rotation; they were replaced with normal (positional) **metal-geared servos**, and the stock horn didn't fit the new servos' spline.
+
+Described by Cobus, 2026-10-09. **Printed in eSUN PLA+ and in use.**
 
 ## What's in the file
 

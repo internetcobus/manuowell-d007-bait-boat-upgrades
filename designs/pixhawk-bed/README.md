@@ -4,9 +4,11 @@ Drawn by Cobus in SketchUp during the upgrade. Added 2026-10-08 from `Pixhawk 4 
 
 ![Pixhawk bed](renders/pixhawk-bed.png)
 
-## Status
+## What it's for
 
-**What it's for, and whether it's printed and fitted: not yet recorded.**
+Holds the **flight controller and the RC receiver** in the right position, secured with a **Velcro strap**.
+
+Described by Cobus, 2026-10-09. **Printed in eSUN PLA+ and in use.**
 
 ## What's in the file
 

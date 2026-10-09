@@ -4,9 +4,9 @@ Conversion done before 2026-10-08: the stock electronics were removed and replac
 
 | Item | Stock D007 | Converted |
 |---|---|---|
-| Control electronics | Stock board | Removed; **Pixhawk 2.4.8** |
+| Control electronics | Stock board | Removed; **Pixhawk 2.4.8** and the RC receiver on a printed [bed](../designs/pixhawk-bed/) with a Velcro strap |
 | Firmware | Stock | **ArduPilot Rover**, twin drive motors (skid steering) |
-| Navigation | Built-in GPS + compass, limited: 3 stored fishing spots, auto-pilot to a spot, auto-return | **GPS** on the Pixhawk; full missions and waypoints |
+| Navigation | Built-in GPS + compass, limited: 3 stored fishing spots, auto-pilot to a spot, auto-return | **GPS** on the Pixhawk; full missions and waypoints. Antenna on the bow, on the centreline, on printed [curved spacers](../designs/gps-antenna-spacer/) |
 | Failsafes | Low-power alarm, low-power auto-return, lost-signal auto-return | Rover failsafes (what is configured is not yet recorded) |
 | RC | Stock remote, about 500 m range; the shop page also lists "4G mobile" | **Futaba T14SG** |
 | Telemetry | None | **SiK 433 MHz** on **TELEM1**, to a phone (QGroundControl or Mission Planner) |
@@ -16,7 +16,8 @@ Conversion done before 2026-10-08: the stock electronics were removed and replac
 | Battery | 7.4 V 10 Ah Li-ion | Unchanged |
 | Battery indicator | 4 LEDs (3 blue + 1 red), 2S only | Planned rebuild, see [04](04-battery-led-indicator.md) |
 | Pixhawk power | n/a | From an ESC's 5 V output; no battery reading |
-| Bait hoppers | Two side-release hoppers, 2 kg total | Released by **servos** on Pixhawk outputs |
+| Wiring | Stock | Signal and power cables kept apart by printed [cable holders](../designs/cable-holders/); the receiver antenna held at 90 degrees |
+| Bait hoppers | Two side-release hoppers, 2 kg total, on **continuous-rotation** servos | **Normal (positional) metal-geared servos** on Pixhawk outputs, with a printed horn ([servo parts](../designs/servo-parts/)) |
 | Fish finder | Not supported | — |
 
 ## Stock specs
