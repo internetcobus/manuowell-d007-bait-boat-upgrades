@@ -125,8 +125,8 @@ ps_sink  = 2.0;    // head sunk this far into the base underside
 car_bw   = 16;     // width at the bottom (open face); foot pocket 10.4 + 2.8 walls
 car_tw   = 24;     // width at the top: wider, so it cannot drop out
 min_skin = 1.2;    // least base plastic left above the carrier, under the roof
-dv_clear = 0.15;   // slide clearance each side. VERIFY with the fit_dovetail
-                   // ladder (0.10 / 0.15 / 0.20) printed in ABS
+dv_clear = 0.10;   // slide clearance each side. Measured 2026-10-10: of the ABS
+                   // ladder (0.10 / 0.15 / 0.20), 0.10 fit best with no wobble
 foot_clear = 0.2;
 // M4 countersunk into the foot
 m4_clear = 4.4;
@@ -142,7 +142,9 @@ lock_cb  = 3.0;    // head counterbore into the base's side face
 nut_af   = 5.5;  nut_t = 2.4;  nut_x = -4;   // nut slot, past the centreline
 
 /* [Wire cover] */
-cover_end_w = 10;  // half-width where the cover ends, just past the wire hole
+cover_end_w = 10;  // half-width where the cover ends
+cover_past  = 23;  // wire-hole centre to the cover's front end. Cobus, 2026-10-10:
+                   // reach far enough to cover the old mounting hole forward of it
 groove_w = 6;      // wire channel in the base underside, carrier -> wire hole
 groove_d = 4;
 
@@ -158,12 +160,13 @@ foot_y0 = foot_y1 - foot_l;
 holes_y = [for (i = [0:2]) duct_aft + duct_l - hole1 - i * hole_pitch];
 car_len = foot_y1 + foot_clear + 2.2;               // front wall 2.2 past the foot
 base_len = post_y1 + post_pitch + 6;                // full width to past the 2nd posts
-cover_y  = wire_y + wire_d / 2 + 4;
+cover_y  = wire_y + cover_past;
 sx = (side == "right") ? 1 : -1;   // the outboard side (lock screw)
 inb = -sx;                          // the inboard side (the step)
 lock_len = wing - lock_cb + abs(nut_x) + 2;
 
 // --- checks -----------------------------------------------------------------
+assert(cover_past >= wire_d / 2 + 3, "cover ends too close to the wire hole");
 assert(car_len < tun_l - 0.5, "carrier runs past the tunnel: it would hit the hull step");
 above_foot = car_top - (-drop + foot_sink);
 assert(above_foot >= 4, str("only ", above_foot, " mm of carrier above the foot for the M4 heads"));
