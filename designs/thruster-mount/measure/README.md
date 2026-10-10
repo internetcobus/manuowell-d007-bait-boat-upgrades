@@ -37,7 +37,16 @@ Each number on the pictures is one measurement. Fill in the **mm** column (or ju
 | 22 | 6 | Height of that post above the flat strip. **Is its top closed (solid)?** | 14.5 it is closed, solid|
 | 23 | 6 | The screw beside the post: what size, and what does it hold? | that is actually a post where the one screw goes in. On that image I circled a post that is not used. The blue post is also only on the one side of the hull. The other side does not have this post.|
 
-Follow-up pictures (2026-10-09): [6 posts inside](6_followup_inside.jpg), [7 where the holes start](7_followup_outside.jpg). The v2 idea drawn to scale from 1-19: [8 v2 to scale](8_v2_to_scale.png). Plan view from below: [9 v2 plan](9_v2_plan.png). The two-part saddle (base + sliding carrier), needed because the duct's oval openings are closed: [10 v2 two-part](10_v2_two_part.png).
+Follow-up pictures (2026-10-09): [6 posts inside](6_followup_inside.jpg), [7 where the holes start](7_followup_outside.jpg). The v2 idea drawn to scale from 1-19: [8 v2 to scale](8_v2_to_scale.png). Plan view from below: [9 v2 plan](9_v2_plan.png). The two-part saddle (base + sliding carrier), needed because the duct's oval openings are closed: [10 v2 two-part](10_v2_two_part.png). Template test result (2026-10-10): all 4 holes line up; one corner catches on a step: [11 the step](11_corner_step.jpg).
+
+| 24 | 11 | Height of the step at the forward end of the strip (the corner the template caught on, 2026-10-10) | 4 |
+| 25 | 11 | Transom edge to that step | 84 |
+| 26 | 11 | Is there the same step on the other side? (yes / no) | no |
+
+| 27 | 12 | Dovetail test piece in the notch (2026-10-10, ~1 mm gap on the curve): press each wing down. Does it **rock**, or sit solid? | |
+| 28 | 12 | Torch from behind: is there light **under the wings**? | |
+| 29 | 12 | Gap at G1 (slope) and G2 (bottom): the largest drill-bit shank that slides in | |
+| 30 | — | The carrier: light push to slide in? Does not fall out? M3 nut drops into its slot? | |
 
 **Also check A** (the blue A on pictures 1 and 3): is that line across the tunnel a **crack**, or left-over glue? Picture 3 is just some residual plastic probably from the mold is was created from. Picture 1 the blue A is on what looks like a kind of a rail 2mm wide and 0.5mm height that runs accross that pattern
 

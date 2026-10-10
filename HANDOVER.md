@@ -1,6 +1,6 @@
 # Handover: current state
 
-_Last updated: 2026-10-09_
+_Last updated: 2026-10-10_
 
 ## Where things stand
 
@@ -14,7 +14,7 @@ _Last updated: 2026-10-09_
 1. Wait for the thrusters; bench test them with the props in water.
 2. Decide the pack: 2× Auline 21700 S70 6S 4500 mAh in parallel (AliExpress), or a no-BMS Molicel P42A 6S2P (Akita or DIY). See [docs/02](docs/02-brushless-upgrade.md).
 3. Weigh the stock battery; do the bath/ballast hull test.
-4. **Thruster mounts: v2 designed** (2026-10-09, [designs/thruster-mount](designs/thruster-mount/)), not yet printed. A base screwed to the hull's 4 existing posts (ST2.9 × 13) and a dovetail carrier that holds the thruster (3 × M4 into the tapped foot) and slides in from the stern, locked by one M3 × 40 from the outboard side. Left and right versions. **Next (2026-10-09): Cobus is printing `v2_template` and `v2_fit_dovetail_right`** (the fit test in ABS, the same as the real parts). Then adjust from his results; check the rail position, the wire hole size and the depth of the foot holes; buy the screws. Still to design: the taller battery lid.
+4. **Thruster mounts: v2 designed** (2026-10-09, [designs/thruster-mount](designs/thruster-mount/)), not yet printed. A base screwed to the hull's 4 existing posts (ST2.9 × 13) and a dovetail carrier that holds the thruster (3 × M4 into the tapped foot) and slides in from the stern, locked by one M3 × 40 from the outboard side. Left and right versions. **Template tested 2026-10-10:** all 4 holes line up; one corner caught on a 4 mm step on the inboard side, 84 mm from the transom. The base is now cut away over the step (no cover: less drag, no trapped water); the template is notched. Left and right versions. **Dovetail test piece (2026-10-10):** about 1 mm gap on the curve, caused by a ~1 mm moulding ridge round the whole mount area. Cobus is shaving it flush. **Dovetail first test (PLA):** nut fits; carrier had play all round. Fixed: the dovetail walls are now twice as steep (16/24 mm) and the clearance is 0.15. **Decided:** stay with two parts (one-piece rejected, see the mount README); epoxy optional. **Next:** print `v2_fit_dovetail_ladder_right` in ABS and pick 0.10 / 0.15 / 0.20; re-seat a base slice after shaving the ridge (expect ~0.3 mm on the curve); reprint the template to confirm it sits flat; check the other tunnel has the same inboard step. Then check the rail position, the wire hole size and the depth of the foot holes; buy the screws. Still to design: the taller battery lid.
 5. **SketchUp parts added 2026-10-08** (STL only): [cable holders](designs/cable-holders/), [servo parts](designs/servo-parts/), [Pixhawk bed](designs/pixhawk-bed/), [GPS antenna spacer](designs/gps-antenna-spacer/). All printed and in use: eSUN PLA+, except the GPS spacers in solid TPU-95. Purposes recorded 2026-10-09; the receiver antenna tube moved to `cable-holders/`. Still to do: add the `.skp` files beside the STLs.
 6. Fit the PM06; configure the Rover parameters and battery failsafe ([docs/03](docs/03-ardupilot-setup.md)); build the LED indicator ([docs/04](docs/04-battery-led-indicator.md)).
 

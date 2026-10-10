@@ -42,7 +42,8 @@
 // (lay it on the hull: do the 4 holes land on the 4 pilot holes?) and
 // "fit_dovetail" (does the carrier slide in with a light push?).
 //
-//   part = "base" | "carrier" | "template" | "fit_dovetail" | "all"
+//   part = "base" | "carrier" | "template" | "fit_dovetail" | "all" | "none"
+//          ("none" draws nothing: for check scripts that include this file)
 //   side = "right" | "left"  the lock screw goes in from the OUTBOARD side, so
 //          print one base + one carrier of each. "right" = screw at +X.
 //
@@ -75,6 +76,15 @@ rail_groove = false;
 rail_y  = 49;      // VERIFY: transom edge to the rail
 rail_gw = 5;       // groove width (rail 2 + slack for the estimate)
 rail_gd = 1.0;     // groove depth (rail 0.5 + slack)
+// The strips are shallow POCKETS. On the INBOARD side of the tunnel (away
+// from the hull's edge) the hull steps 4 mm proud at the strip's forward end;
+// the template's corner caught on it (Cobus, 2026-10-10, measure/ #24-26).
+// The outboard strip runs to the hull edge: no step there.
+step_y     = 84;   // #25 transom edge to the step
+step_h     = 4;    // #24 how far the hull forward of it stands proud
+step_x0    = 18;   // VERIFY: where the raised area starts across. It begins at
+                   // the tunnel's frame line (~21.5); 18 leaves a margin
+step_clear = 0.5;  // (unused since the cut-out; kept for a relief variant)
 
 /* [Thruster: measured] */
 duct_l    = 75;    // spec
@@ -107,10 +117,16 @@ ps_sink  = 2.0;    // head sunk this far into the base underside
 // 17.5, so 12 leaves the post's closed top intact). Try one post first.
 
 /* [Carrier: dovetail bar] */
-car_bw   = 18;     // width at the bottom (open face)
-car_tw   = 22;     // width at the top: wider, so it cannot drop out
+// The walls' slope sets how far the carrier SINKS for a given side gap:
+// drop = clearance / ((car_tw - car_bw) / 2 / car_h). The first test print
+// (18 / 22, 0.3 clearance) had walls only ~9 deg off vertical, so 0.3 a side
+// let it sink ~2 mm: "play all round" (Cobus, 2026-10-10, PLA). 16 / 24
+// doubles the slope; with 0.15 clearance the drop is ~0.5 mm.
+car_bw   = 16;     // width at the bottom (open face); foot pocket 10.4 + 2.8 walls
+car_tw   = 24;     // width at the top: wider, so it cannot drop out
 min_skin = 1.2;    // least base plastic left above the carrier, under the roof
-dv_clear = 0.3;    // slide clearance each side
+dv_clear = 0.15;   // slide clearance each side. VERIFY with the fit_dovetail
+                   // ladder (0.10 / 0.15 / 0.20) printed in ABS
 foot_clear = 0.2;
 // M4 countersunk into the foot
 m4_clear = 4.4;
@@ -143,7 +159,8 @@ holes_y = [for (i = [0:2]) duct_aft + duct_l - hole1 - i * hole_pitch];
 car_len = foot_y1 + foot_clear + 2.2;               // front wall 2.2 past the foot
 base_len = post_y1 + post_pitch + 6;                // full width to past the 2nd posts
 cover_y  = wire_y + wire_d / 2 + 4;
-sx = (side == "right") ? 1 : -1;
+sx = (side == "right") ? 1 : -1;   // the outboard side (lock screw)
+inb = -sx;                          // the inboard side (the step)
 lock_len = wing - lock_cb + abs(nut_x) + 2;
 
 // --- checks -----------------------------------------------------------------
@@ -158,6 +175,7 @@ assert(car_bw / 2 + dv_clear < tun_w / 2 - 2, "dovetail slot too close to the tu
 assert(wing - post_x - ps_head / 2 >= 2, "less than 2 mm of wing outside the post-screw heads");
 assert(wing - edge_r >= post_x + ps_head / 2, "the bottom-edge round cuts into the post-screw head pockets");
 assert(edge_r < drop / 2, "edge round too big for the base's thickness");
+assert(post_y1 + post_pitch + ps_head / 2 + 2 < step_y - 1, "step relief runs into the forward post screws");
 assert(lock_z - lock_d / 2 > -drop + 1 && lock_z + lock_d / 2 < -1,
        "lock screw too close to the base's faces: increase drop");
 
@@ -182,8 +200,21 @@ module dovetail_profile(c = 0, ext = 0) {   // as X, Z; c = clearance, ext = ext
 // Extrude an (X, Z) profile along +Y from y0 to y1.
 module along_y(y0, y1) { translate([0, y1, 0]) rotate([90, 0, 0]) linear_extrude(y1 - y0) children(); }
 
-module footprint() {   // base outline seen from below (X, Y), corners rounded
-    offset(r = corner_r) offset(delta = -corner_r) footprint_sharp();
+// Base outline seen from below (X, Y). The area over the inboard step is cut
+// away altogether (Cobus, 2026-10-10): a cover there only trapped water and
+// added drag, and it carries no load. Outer corners rounded corner_r, the
+// inside corner of the cut-out rounded too.
+module footprint() {
+    offset(r = corner_r) offset(delta = -corner_r)
+    offset(r = -corner_r) offset(delta = corner_r)
+    difference() {
+        footprint_sharp();
+        step_zone_2d();
+    }
+}
+module step_zone_2d() {
+    x0 = (inb > 0) ? step_x0 : -(wing + 2);
+    translate([x0, step_y - 1]) square([wing + 2 - step_x0, 200]);
 }
 module footprint_sharp() {
     polygon([[-wing, 0], [wing, 0], [wing, base_len], [cover_end_w, cover_y],
@@ -204,14 +235,14 @@ module plate() {
 }
 
 // --- parts, in boat axes ---------------------------------------------------------
-module base() {
+module base(c = dv_clear) {
     difference() {
         union() {
             plate();
             along_y(0, tun_l - 0.5) fill_profile();
         }
         // dovetail slot, open at the stern and underneath
-        along_y(-1, car_len + dv_clear) dovetail_profile(dv_clear, 1);
+        along_y(-1, car_len + c) dovetail_profile(c, 1);
         // 4 post screws: clearance + head pockets from below
         for (s = [-1, 1], y = [post_y1, post_y1 + post_pitch]) translate([s * post_x, y, 0]) {
             translate([0, 0, -drop - 1]) cylinder(d = ps_clear, h = drop + 2);
@@ -254,8 +285,11 @@ module carrier() {
     }
 }
 
+// The area forward of the inboard strip's end, where the hull stands proud.
+module step_zone(z0, h) { translate([0, 0, z0]) linear_extrude(h) step_zone_2d(); }
+
 // --- print layouts ----------------------------------------------------------------
-module base_print()    { translate([0, 0, drop]) base(); }                       // underside on the bed
+module base_print(c = dv_clear) { translate([0, 0, drop]) base(c); }                       // underside on the bed
 module carrier_print() { translate([0, 0, car_top]) rotate([0, 180, 0]) carrier(); }   // top on the bed
 
 module template() {    // 1.2 mm flat plate: lay it on the hull, check the 4 holes
@@ -265,18 +299,32 @@ module template() {    // 1.2 mm flat plate: lay it on the hull, check the 4 hol
         translate([-tun_w / 2, 0, -1]) cube([tun_w, tun_l, 3]);                   // window: the tunnel
         translate([0, wire_y, -1]) cylinder(d = wire_d, h = 3);                  // the wire hole
         translate([-wing + 3, rail_y - 0.5, 0.6]) cube([2 * wing - 6, 1, 1]);   // scribe line: the rail
+        step_zone(-1, 3);                                                      // clear the inboard step
     }
 }
 
-module fit_dovetail() {   // 14 mm of each part, to check the slide
-    intersection() { base_print(); translate([-50, -1, -1]) cube([100, 15, 40]); }
-    translate([70, 0, 0]) intersection() { carrier_print(); translate([-50, -1, -1]) cube([100, 15, 40]); }
+// Clearance ladder: one 14 mm carrier slice and three 14 mm base slices
+// (the middle 40 mm, around the slot), cut at 0.10 / 0.15 / 0.20 a side.
+// The slices are marked with 1, 2 and 3 notches. Pick the one that slides with
+// a light push and doesn't wobble, then set dv_clear to it.
+fit_clears = [0.10, 0.15, 0.20];
+module fit_dovetail() {
+    for (i = [0:2]) translate([i * 46, 0, 0]) difference() {
+        intersection() { base_print(fit_clears[i]); translate([-20, -1, -1]) cube([40, 15, 40]); }
+        for (n = [0:i]) translate([-20 + 3 + n * 3.5, -0.01, -1]) cube([1.5, 2, 40]);   // notches = which clearance
+    }
+    translate([3 * 46, 0, 0]) intersection() { carrier_print(); translate([-50, -1, -1]) cube([100, 15, 40]); }
 }
 
 module dummy_hull() {
     color("DimGray", 0.6) difference() {
         translate([-60, -2, 0]) cube([120, 140, hull_t]);
         translate([-tun_w / 2, -3, -0.01]) cube([tun_w, tun_l + 3, hull_t + 1]);
+    }
+    // the raised area forward of the inboard strip (starts at the tunnel's frame line)
+    color("DimGray", 0.6) intersection() {
+        translate([(inb > 0) ? tun_w / 2 : -60, step_y, -step_h]) cube([60 - tun_w / 2, 138 - step_y, step_h]);
+        translate([-60, -2, -step_h]) cube([120, 140, step_h]);
     }
     color("DimGray", 0.6) along_y(-2, tun_l) difference() {
         intersection() { offset(delta = hull_t) fill_profile(-bed_gap); translate([-60, 0]) square([120, 40]); }
@@ -297,7 +345,7 @@ if      (part == "base")         base_print();
 else if (part == "carrier")      carrier_print();
 else if (part == "template")     template();
 else if (part == "fit_dovetail") fit_dovetail();
-else {
+else if (part == "all") {
     color("SteelBlue") base();
     color("MediumPurple") carrier();
     dummy_hull();

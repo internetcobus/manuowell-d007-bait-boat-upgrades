@@ -110,3 +110,34 @@ def followup_outside(d):
     ring(d, (555, 122), 16)
     note(d, (60, 860), "20  transom edge to the centre of the first two holes", 21)
 make("20261009_101526.jpg", "7_followup_outside.jpg", "7  Follow-up: where the holes start", followup_outside)
+
+# --- 11: the corner the template catches on (Cobus, 2026-10-10) ------------------
+# Drawn on Cobus's own photo (his red circle stays). 658 x 909 px.
+def corner(d):
+    line(d, (110, 497), (110, 520)); badge(d, (70, 505), 24)        # step height
+    line(d, (612, 52), (612, 497)); badge(d, (640, 280), 25)        # transom to the step
+    ring(d, (470, 498), 14); badge(d, (520, 470), 26)               # the other side
+    note(d, (20, 660), "24  how high is the step at the end of the strip?", 18)
+    note(d, (20, 692), "25  transom edge to that step", 18)
+    note(d, (20, 724), "26  same step on this side? (yes / no)", 18)
+make("20261010_catches_corner_cobus.png", "11_corner_step.jpg", "11  The step the template catches on", corner)
+
+# --- 12: the dovetail test piece in the transom notch (Cobus, 2026-10-10) ---------
+# His photo is 4000 x 3000; drawn at full size, marks scaled up.
+def gap(d):
+    def big_ring(c, r, n, off):
+        for col, ww in ((BLACK, 14), (YEL, 8)):
+            d.ellipse([c[0]-r, c[1]-r, c[0]+r, c[1]+r], outline=col, width=ww)
+        x, y = c[0]+off[0], c[1]+off[1]; R = 42
+        d.ellipse([x-R-4, y-R-4, x+R+4, y+R+4], fill=WHITE); d.ellipse([x-R, y-R, x+R, y+R], fill=(30,120,220))
+        d.text((x, y), n, font=font(46), fill=WHITE, anchor="mm")
+    big_ring((2700, 1010), 170, "G1", (230, -120))      # right slope: the clearest gap
+    big_ring((2000, 1235), 140, "G2", (0, 210))         # bottom of the curve
+    big_ring((1100, 960), 150, "G3", (-230, 60))        # left slope
+    big_ring((3150, 850), 120, "G4", (170, 150))        # under the right wing
+    for i, t in enumerate(["G1  right slope: the clearest gap I can see",
+                           "G2  the bottom of the curve",
+                           "G3  left slope: reflections, hard to read",
+                           "G4  under the right wing: a light line. Gap, or the rounded edge?"]):
+        note(d, (80, 1700 + i*80), t, 48)
+make("20261010_dovetail_gap.jpg", "12_dovetail_gap.jpg", "12  Where I see the gap", gap)
