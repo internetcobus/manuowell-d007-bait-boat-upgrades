@@ -30,8 +30,8 @@ Each motor position has a moulded tunnel in the hull bottom (43 wide, 10 deep, 6
 1. **Pilot holes:** open the hull's 2 mm holes to **2.4 mm**, about **12 mm deep** from outside. Tape round the drill bit marks the depth. Hull and post together are 17.5 mm, so this leaves the post's closed top intact. Do one post first and check it doesn't crack.
 2. **Base:** screw it to the 4 posts with **ST2.9 × 13**, with the thruster off. A dab of marine sealant on each screw stops water wicking into the posts. Epoxy bedding is **optional** (decided 2026-10-10): at about 6 N per screw at full thrust, the screws carry the load. Bedding would only help spread knocks.
 3. **Foot holes:** drill the thruster foot's 3 mm holes out to **3.3 mm** and tap them **M4**, to their existing depth only. **Never drill through.** The foot sits on the duct, and a bolt end would hit the propeller.
-4. **Carrier:** bolt the foot into it on the bench, with 3 × **M4 countersunk**. Drop the M3 nut into its slot in the carrier's top.
-5. **Assemble:** slide the carrier in from the stern until it stops, then fit the **M3 × 40** lock screw from the outboard side.
+4. **Carrier:** bolt the foot into it on the bench, with 3 × **M4 countersunk**. Drop the M3 Nyloc nut into its slot in the carrier's top, nylon ring facing the centre (away from the screw head).
+5. **Assemble:** slide the carrier in from the stern until it stops, then fit the **M3 × 30** lock screw from the outboard side.
 6. **Wires:** run them along the channel and up through the wire hole. Seal the hole with a cable gland or potting.
 
 ### Parts for both sides
@@ -40,7 +40,7 @@ Each motor position has a moulded tunnel in the hull bottom (43 wide, 10 deep, 6
 |---|---|---|
 | 8 (+ spares) | **ST2.9 × 13** stainless pan-head self-tapper | Base to the 4 posts, each side |
 | 6 | **M4 countersunk** stainless, about **× 12**. Length to check: 6.1 mm goes through the carrier, the rest into the foot | Foot to carrier |
-| 2 | **M3 × 40** stainless machine screw + **2 M3 nuts** | Lock screws |
+| 2 | **M3 × 30** stainless socket cap screw + **2 stainless M3 Nyloc nuts** (4 mm thick). Stainless M3 × 40 couldn't be found in SA (2026-10-11), so the nut slot moved to the outboard side of the carrier's centre to suit a 30. Nyloc rather than Loctite: uncured threadlocker can stress-crack ABS, and the Nyloc stays removable. Source: [Xtrude 3D M3 × 30, 10 pack](https://x3d.co.za/product/stainless-steel-cap-bolt-m3-x-30mm-high-strength/) and [M3 Nyloc nuts](https://x3d.co.za/product/stainless-steel-hex-self-locking-nylon-nuts-m3-10-pack/) | Lock screws |
 | 1 each | 2.4 mm and 3.3 mm drill, **M4 tap** | Pilot holes and foot holes |
 | 1 | Marine sealant (e.g. Sikaflex); thickened epoxy only if you choose to bed the bases | Screws, and optional bedding |
 | 2 | Cable gland, or sealant to pot the wire holes | Wire holes |

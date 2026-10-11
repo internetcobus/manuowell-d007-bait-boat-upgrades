@@ -28,7 +28,7 @@
 //      M4 (3.3 mm drill), to their EXISTING depth. Never drill through: the
 //      foot sits on the duct and a bolt end would hit the propeller.
 //   3  Slide the carrier into the base from the stern until it stops (forward
-//      thrust pushes it into the stop). Fit the side LOCK screw, M3 x 40, from
+//      thrust pushes it into the stop). Fit the side LOCK screw, M3 x 30, from
 //      the outboard side; its nut sits in a slot in the carrier.
 //
 // LOADS: about 1.7 kg thrust per side. With the thrust line ~45 mm below the
@@ -133,13 +133,20 @@ m4_clear = 4.4;
 m4_csk_d = 8.4;
 m4_csk_h = 2.4;
 
-/* [Side lock screw: M3 x 40 + nut] */
+/* [Side lock screw: M3 x 30 + Nyloc nut] */
 lock_y   = 6;      // in the 15 mm at the aft end where the carrier has no foot
 lock_z   = -drop / 2;
 lock_d   = 3.4;
 lock_head = 6.2;
-lock_cb  = 3.0;    // head counterbore into the base's side face
-nut_af   = 5.5;  nut_t = 2.4;  nut_x = -4;   // nut slot, past the centreline
+lock_cb  = 4.0;    // head counterbore into the base's side face (DIN 912 head is 3).
+                   // 4.0 leaves 1.4 mm of wall to the nearest post-screw head
+                   // pocket (4.5 -> 0.8, 5 -> 0.5: too thin)
+lock_l   = 30;     // screw length bought. Cobus, 2026-10-11: no stainless M3 x 40
+                   // to be found in SA; Xtrude 3D has stainless M3 x 30
+nut_af   = 5.5;  nut_t = 4.0;   // M3 Nyloc (DIN 985), stainless. Cobus, 2026-10-11:
+                                 // Nyloc rather than Loctite, which attacks ABS
+nut_x    = 4.5;    // nut slot centre from the carrier's centreline, + = outboard
+                   // (was -4, past the centre, which needed an M3 x 40)
 
 /* [Wire cover] */
 cover_end_w = 10;  // half-width where the cover ends
@@ -163,10 +170,16 @@ base_len = post_y1 + post_pitch + 6;                // full width to past the 2n
 cover_y  = wire_y + cover_past;
 sx = (side == "right") ? 1 : -1;   // the outboard side (lock screw)
 inb = -sx;                          // the inboard side (the step)
-lock_len = wing - lock_cb + abs(nut_x) + 2;
+nut_cw   = nut_af / cos(30);                        // nut across corners, 6.35
+lock_len = wing - lock_cb - nut_x + nut_t / 2 + 0.5;  // head seat to 0.5 past the Nyloc's face
 
 // --- checks -----------------------------------------------------------------
 assert(cover_past >= wire_d / 2 + 3, "cover ends too close to the wire hole");
+assert(lock_len <= lock_l && lock_len >= lock_l - 2, "lock screw length doesn't match the nut slot: move nut_x");
+// carrier flank half-width at height z (bottom car_bw, top car_tw)
+function car_half(z) = car_bw / 2 + (z + drop) / car_h * (car_tw - car_bw) / 2;
+assert(lock_y - nut_cw / 2 - 0.15 >= 2, "nut slot breaks out of the carrier's aft end");
+assert(car_half(lock_z - nut_af / 2) - (nut_x + nut_t / 2 + 0.15) >= 1.5, "nut slot too close to the carrier's side");
 assert(car_len < tun_l - 0.5, "carrier runs past the tunnel: it would hit the hull step");
 above_foot = car_top - (-drop + foot_sink);
 assert(above_foot >= 4, str("only ", above_foot, " mm of carrier above the foot for the M4 heads"));
@@ -186,7 +199,7 @@ echo(str("Tunnel arc radius ", R, "; carrier ", car_bw, "-", car_tw, " wide x ",
          " tall x ", car_len, " long; ", above_foot, " mm above the foot."));
 echo(str("Foot holes (M4) at ", holes_y, " mm from the transom. Duct top ", drop,
          " mm below the hull; thruster axis ", drop + duct_od / 2, " mm below."));
-echo(str("Lock screw: M3 x ", ceil(lock_len / 5) * 5, " (needs ", lock_len, ")."));
+echo(str("Lock screw: M3 x ", lock_l, " (needs ", lock_len, ")."));
 
 // --- 2D helpers ---------------------------------------------------------------
 // Tunnel fill across X (as X, Z), lowered by `down` (0 = bedded on the roof).
@@ -281,10 +294,13 @@ module carrier() {
             cylinder(d = m4_clear, h = car_h + 2);
             translate([0, 0, car_h + 1 - m4_csk_h]) cylinder(d1 = m4_clear, d2 = m4_csk_d, h = m4_csk_h + 0.01);
         }
-        // lock screw through, and a slot from the top for its nut
+        // lock screw through, and a slot from the top for its nut. The slot is
+        // the nut's corner width along y, so the nut drops in FLAT side down and
+        // sits centred on the screw; the floor stops it turning (~6 deg at most).
+        // (Corner-down, as first drawn, sat it 0.3 mm high.)
         translate([0, lock_y, lock_z]) rotate([0, 90, 0]) cylinder(d = lock_d, h = 2 * car_tw, center = true);
-        translate([sx * nut_x - nut_t / 2 - 0.15, lock_y - nut_af / 2 - 0.15, lock_z - nut_af / 2 - 0.15])
-            cube([nut_t + 0.3, nut_af + 0.3, car_top - lock_z + nut_af / 2 + 1]);
+        translate([sx * nut_x - nut_t / 2 - 0.15, lock_y - nut_cw / 2 - 0.15, lock_z - nut_af / 2 - 0.15])
+            cube([nut_t + 0.3, nut_cw + 0.3, car_top - lock_z + nut_af / 2 + 1]);
     }
 }
 
