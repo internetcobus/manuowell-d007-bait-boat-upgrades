@@ -301,6 +301,13 @@ module carrier() {
         translate([0, lock_y, lock_z]) rotate([0, 90, 0]) cylinder(d = lock_d, h = 2 * car_tw, center = true);
         translate([sx * nut_x - nut_t / 2 - 0.15, lock_y - nut_cw / 2 - 0.15, lock_z - nut_af / 2 - 0.15])
             cube([nut_t + 0.3, nut_cw + 0.3, car_top - lock_z + nut_af / 2 + 1]);
+        // aft bottom edge rounded edge_r, to carry on the base's round across
+        // the slot (Cobus, 2026-10-12: it was left square)
+        rotate([90, 0, 90]) linear_extrude(car_tw + 2, center = true)
+            difference() {
+                translate([-1, -drop - 1]) square([edge_r + 1, edge_r + 1]);
+                translate([edge_r, -drop + edge_r]) circle(r = edge_r, $fn = 24);
+            }
     }
 }
 
