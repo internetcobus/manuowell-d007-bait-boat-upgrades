@@ -1,18 +1,19 @@
 # Handover: current state
 
-_Last updated: 2026-10-10_
+_Last updated: 2026-10-14_
 
 ## Where things stand
 
 - **Running today (working well):** Pixhawk 2.4.8 + GPS on ArduPilot Rover, stock 390 brushed thrusters on two CL9030 brushed ESCs, stock 7.4 V 10 Ah Li-ion pack. The Pixhawk is powered from an ESC's 5 V output, so it cannot read the battery yet.
 - **Brushless upgrade:** 480 Kv ducted thrusters (CW/CCW pair) and two BLHeli 40 A bidirectional ESCs ordered. Duct opening measured at 62 mm, which confirms the thrusters match the specs in [the chat export](docs/sources/2026-10-08-earlier-chat-export.md), not the 1000 KV listing.
 - **Decided:** go **6S**. Cap `MOT_THR_MAX` at about 90%, because a full 6S pack (25.2 V) is slightly over the 24 V rating.
-- **Power module:** Holybro **PM06** on hand, **not fitted yet**.
+- **Power module and battery (2026-10-14):** Holybro **PM06 V1** fitted; Akita **6S2P Li-ion 6,000 mAh, no BMS**. Voltage calibrated (`BATT_VOLT_MULT` 10.930); current not yet. Failsafe RTL at 3.3 V/cell. See [docs/03](docs/03-ardupilot-setup.md).
+- **Ground station:** Mission Planner runs on the Ubuntu VM (`~/Applications/MissionPlanner`, Mono) over the SiK radio on `/dev/ttyUSB0` at 57600.
 
 ## Next steps
 
 1. Wait for the thrusters; bench test them with the props in water.
-2. Decide the pack: 2× Auline 21700 S70 6S 4500 mAh in parallel (AliExpress), or a no-BMS Molicel P42A 6S2P (Akita or DIY). See [docs/02](docs/02-brushless-upgrade.md).
+2. ~~Decide the pack~~: done, Akita 6S2P 6,000 mAh Li-ion, no BMS (2026-10-14).
 3. Weigh the stock battery; do the bath/ballast hull test.
 4. **Thruster mounts: v2** ([designs/thruster-mount](designs/thruster-mount/)). A base screwed to the hull's 4 existing posts (ST2.9 × 13) and a dovetail carrier that holds the thruster (3 × M4 into the tapped foot), slides in from the stern and is locked by one M3 × 30 from the outboard side. Left and right versions.
    - **Tested 2026-10-10:** the template's 4 holes line up. The base is now cut away over a 4 mm step on the inboard side (84 mm from the transom). A ~1 mm gap on the curve came from a moulding ridge round the mount area, which Cobus shaved flush. The first dovetail (PLA) was loose because its walls were too steep; it's now 16/24 mm, and the ABS clearance ladder picked **0.10 mm** (no wobble). The wire cover now runs 23 mm past the wire hole to cover the old mounting hole.
@@ -23,11 +24,10 @@ _Last updated: 2026-10-10_
    - Still to design: the taller battery lid.
 5. **Hopper servo holes leak (raised 2026-10-11):** in windy conditions water washes over the deck and in through the holes for the hopper servo horns. There is already an O-ring in each hole, but water still gets past it. Cobus is also considering a drain/breather plug to open while the boat is idle. Options discussed: a labyrinth cap (raised ring on the deck + a skirt on the horn, no friction; first choice), a TPU-95 gasket under the servo, an O-ring on the shaft, IP67 servos. **Waiting on** photos from above and below plus the hole, boss and gap sizes; then redraw the horn ([servo parts](designs/servo-parts/)). Picked up after the mount screws arrive.
 6. **SketchUp parts added 2026-10-08** (STL only): [cable holders](designs/cable-holders/), [servo parts](designs/servo-parts/), [Pixhawk bed](designs/pixhawk-bed/), [GPS antenna spacer](designs/gps-antenna-spacer/). All printed and in use: eSUN PLA+, except the GPS spacers in solid TPU-95. Purposes recorded 2026-10-09; the receiver antenna tube moved to `cable-holders/`. Still to do: add the `.skp` files beside the STLs.
-7. Fit the PM06; configure the Rover parameters and battery failsafe ([docs/03](docs/03-ardupilot-setup.md)); build the LED indicator ([docs/04](docs/04-battery-led-indicator.md)).
+7. PM06 fitted and battery failsafe set (2026-10-14). Still to do: calibrate `BATT_AMP_PERVLT` from the charger's mAh after a run; the skid-steering parameters ([docs/03](docs/03-ardupilot-setup.md)); the LED indicator ([docs/04](docs/04-battery-led-indicator.md)).
 
 ## Open questions
 
-- **PM06 connector:** the PM06 ends in a 6-pin JST-GH plug; the Pixhawk 2.4.8 power port is a 6-pin DF13. An adapter cable is needed. Check which PM06 version it is (V1 is 2S-6S, V2 is 2S-14S); either covers 6S.
 - **5 V supply:** with the PM06 powering the Pixhawk, decide what each ESC's 5 V / 3 A BEC feeds (servos? LED MCU?). Never connect two BECs to the same rail.
 - Which Pixhawk outputs drive the relay and the hopper servos (motors: `SERVO1` / `SERVO3`).
 - Which RC receiver is paired with the T14SG, and how it connects (SBUS?).
