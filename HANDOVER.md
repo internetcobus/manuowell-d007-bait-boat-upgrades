@@ -7,7 +7,7 @@ _Last updated: 2026-10-14_
 - **Running today (working well):** Pixhawk 2.4.8 + GPS on ArduPilot Rover, stock 390 brushed thrusters on two CL9030 brushed ESCs, stock 7.4 V 10 Ah Li-ion pack. The Pixhawk is powered from an ESC's 5 V output, so it cannot read the battery yet.
 - **Brushless upgrade:** 480 Kv ducted thrusters (CW/CCW pair) and two BLHeli 40 A bidirectional ESCs ordered. Duct opening measured at 62 mm, which confirms the thrusters match the specs in [the chat export](docs/sources/2026-10-08-earlier-chat-export.md), not the 1000 KV listing.
 - **Decided:** go **6S**. Cap `MOT_THR_MAX` at about 90%, because a full 6S pack (25.2 V) is slightly over the 24 V rating.
-- **Power module and battery (2026-10-14):** Holybro **PM06 V1** fitted; Akita **6S2P Li-ion 6,000 mAh, no BMS**. Voltage calibrated (`BATT_VOLT_MULT` 10.930); current not yet. Failsafe RTL at 3.3 V/cell. See [docs/03](docs/03-ardupilot-setup.md).
+- **Power module and battery (2026-10-14):** Holybro **PM06 V1** fitted; Akita **6S2P Li-ion 6,000 mAh, no BMS**, cells taken to be Samsung 30Q (invoice "INR18650-30"): charge 4.20 V at 3 A, **30 A pack limit**. Voltage calibrated (`BATT_VOLT_MULT` 10.930); current not yet. Failsafe RTL at 3.3 V/cell, **voltage only** (mAh triggers off: the boat is power-cycled between drops). See [docs/03](docs/03-ardupilot-setup.md).
 - **Ground station:** Mission Planner runs on the Ubuntu VM (`~/Applications/MissionPlanner`, Mono) over the SiK radio on `/dev/ttyUSB0` at 57600.
 
 ## Next steps
