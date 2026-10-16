@@ -32,7 +32,7 @@ Each motor position has a moulded tunnel in the hull bottom (43 wide, 10 deep, 6
 3. **Foot holes:** drill the thruster foot's 3 mm holes out to **3.3 mm** and tap them **M4**, to their existing depth only (measured **10.5 mm**, 2026-10-11; the M4 × 12 uses about 6 of it). **Never drill through.** The foot sits on the duct, and a bolt end would hit the propeller.
 4. **Carrier:** bolt the foot into it on the bench, with 3 × **M4 countersunk**. Drop the M3 Nyloc nut into its slot in the carrier's top, nylon ring facing the centre (away from the screw head).
 5. **Assemble:** slide the carrier in from the stern until it stops, then fit the **M3 × 30** lock screw from the outboard side.
-6. **Wires:** run them along the channel and up through the wire hole. Seal the hole with a cable gland or potting.
+6. **Wires:** run them along the channel and up through the wire hole. Seal it from inside with the [wire grommet](#wire-grommet) and a bead of marine sealant, then fill the base's wire pocket from outside.
 
 ### Parts for both sides
 
@@ -43,10 +43,32 @@ Each motor position has a moulded tunnel in the hull bottom (43 wide, 10 deep, 6
 | 2 | **M3 × 30** stainless socket cap screw + **2 stainless M3 Nyloc nuts** (4 mm thick). Stainless M3 × 40 couldn't be found in SA (2026-10-11), so the nut slot moved to the outboard side of the carrier's centre to suit a 30. Nyloc rather than Loctite: uncured threadlocker can stress-crack ABS, and the Nyloc stays removable. Source: [Xtrude 3D M3 × 30, 10 pack](https://x3d.co.za/product/stainless-steel-cap-bolt-m3-x-30mm-high-strength/) and [M3 Nyloc nuts](https://x3d.co.za/product/stainless-steel-hex-self-locking-nylon-nuts-m3-10-pack/) | Lock screws |
 | 1 each | 2.4 mm and 3.3 mm drill, **M4 tap** | Pilot holes and foot holes |
 | 1 | Marine sealant (e.g. Sikaflex); thickened epoxy only if you choose to bed the bases | Screws, and optional bedding |
-| 2 | Cable gland, or sealant to pot the wire holes | Wire holes |
+| 2 | **Wire grommet**, printed in TPU-95 (`v2/wire_grommet.stl`), + marine sealant, MS polymer such as Sikaflex 291i | Wire holes |
 | — | ABS (or ASA) filament | Bases and carriers |
 
 The v1 shopping list (lamp tube, nuts, rubber washers) is no longer needed.
+
+### Wire grommet
+
+The base's wire pocket (Ø12, right through the base) sits over the hull's wire hole, and the wire channel is open underneath, so water reaches the hull hole. That's where it's sealed, in two layers (Cobus asked, 2026-10-16):
+
+1. **Inside: a TPU-95 grommet plus sealant.** Each wire is 2 mm, but the bullet connectors are just over 5 mm, so each wire hole has a slit to the edge: the wires go in sideways with the connectors on. The body is 1.0 mm over the ~11 mm hole, so the TPU fills a hole that isn't quite round and the squeeze closes the slits. The wire holes are a loose Ø2.5 on purpose: the sealant seals, not the hole. The grommet holds the wires and the sealant; the bead of sealant over the flange and round each wire is the seal. A TPU plug on its own doesn't stick to anything, so water would creep past it.
+2. **Outside: fill the base's wire pocket** with the same sealant once the inside has cured (24 h), smoothed flush with the underside.
+
+To pull a motor later: dig the sealant out of the pocket, cut the inside bead, and the wires come out of the slits. Use bullet connectors inside the hull so nothing is cut. Use a neutral-cure MS-polymer sealant, never vinegar-smelling (acetoxy) silicone, which corrodes copper. Clean with IPA first.
+
+![Wire grommet, labelled](v2/renders/wire_grommet_labelled.png)
+
+| File | What |
+|---|---|
+| `v2/wire_grommet.stl` | 2 grommets (one per motor), body Ø12.0, wire holes Ø2.5. Print in TPU-95, flange down, solid. |
+| `v2/wire_grommet_ladder.stl` | **Test-fit 2:** body Ø12.0, wire holes **Ø2.2 / 2.5 / 2.8**, marked with 1 / 2 / 3 notches in the flange. **Result (2026-10-16, TPU-95): Ø2.5 (2 notches) fits perfectly**, which is what `v2/wire_grommet.stl` already uses. |
+
+**Test-fit 1 (2026-10-16, TPU-95):** body Ø11.2 / 11.6 / 12.0 with Ø1.8 wire holes. With no wires in, the **12.0** fitted the hole best, so the body is now 12.0 (`squeeze` 1.0). The Ø1.8 wire holes were far too tight: with one wire in, the others wouldn't go in at all. Small holes print undersize in TPU, and each wire pushes the material into its neighbours. Hence the 2.2 to 2.8 ladder.
+
+Source: `wire_grommet.scad` (`VERIFY`: `body_l` = 4 mm assumes the hull is about 3 mm thick at the hole; spare length goes into the base's pocket).
+
+![Test-fit ladder](v2/renders/wire_grommet_ladder.png)
 
 ### Print and check first
 
@@ -64,7 +86,7 @@ Print in ABS or ASA (not PLA: sun and water), 4+ walls, 40 %+ infill. Both parts
 ### Not yet measured (marked `VERIFY` in the .scad)
 
 - **The rail across the tunnel:** no groove for it (Cobus, 2026-10-09). It's only 0.5 mm high, and the base sits 0.3 mm off the tunnel roof for the epoxy, so the bedding takes it up. If the base rocks on a dry fit, sand the rail down. The groove can be switched back on with `rail_groove = true`; its position (49 mm from the transom) was read off photo 1 by scale, and the template's scribed line checks it.
-- **The wire hole:** about 11 mm across.
+- **The wire hole:** about 11 mm across on the inside, not quite round (Cobus, 2026-10-16). The grommet body is 12.0, the best of the first test-fit. Still to measure: the hull's thickness at the hole (`body_l` in `wire_grommet.scad`).
 - **How deep the foot's 3 holes go.** That decides the M4 screw length.
 - **Where the raised area starts across:** taken from 18 mm off the centreline (`step_x0`; the tunnel's frame line is at 21.5). **Also check the other tunnel** has the same step on its inboard side; the model assumes the hull is mirror-symmetric.
 

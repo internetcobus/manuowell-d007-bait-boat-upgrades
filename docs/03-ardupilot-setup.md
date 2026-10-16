@@ -14,6 +14,8 @@ Settings for the brushless upgrade. The power module and battery sections were s
 
 Set both ESCs to bidirectional (3D) mode, with neutral at 1500 µs.
 
+**ESC calibration: not needed (2026-10-16).** Mission Planner's ESC Calibration button is ArduCopter-only (it gives an "AC3" error on Rover). Motor Test (Setup → Optional Hardware) ran both thrusters forward and reverse on the ESCs' default range, so they were left as they came. If one ever creeps at neutral or won't reverse, calibrate by hand: set `SERVO1_FUNCTION` and `SERVO3_FUNCTION` to 53 (RC3 passthrough), power the Pixhawk from USB with the safety switch on, hold the throttle stick at full while plugging in the battery, move it to full low after the beeps, then set them back to 73 / 74.
+
 ## Power module (Holybro PM06 V1) and battery
 
 Fitted 2026-10-14 with the Akita pack: **6S2P Li-ion, 6,000 mAh, no BMS**. With no BMS, the battery failsafe below is the only protection against over-discharge, so keep the voltage calibrated and always balance-charge.
@@ -36,7 +38,7 @@ Fitted 2026-10-14 with the Akita pack: **6S2P Li-ion, 6,000 mAh, no BMS**. With 
 
 | Parameter | Value | Note |
 |---|---|---|
-| `BATT_MONITOR` | 4 | Analog voltage and current. Reboot after setting |
+| `BATT_MONITOR` | **3** | **Voltage only** (was 4, voltage and current; changed 2026-10-16 because the current sensor reads no signal, see below). Reboot after setting |
 | `BATT_VOLT_PIN` / `BATT_CURR_PIN` | 2 / 3 | Pixhawk 2.4.8 power port |
 | `BATT_VOLT_MULT` | **10.930** | Calibrated 2026-10-14: multimeter 24.34 V, HUD 24.33 V afterwards. The PM06 **V2** value (18.182) read 40.49 V on this V1 |
 | `BATT_AMP_PERVLT` | 36.364 | **Not calibrated.** Holybro's published PM06 figure. Their voltage figure (18.182) was badly wrong on this V1, but one PM06 user on the ArduPilot forum calibrated current to 38, so this is probably within ~5%. Correct it with a meter in series, or from the mAh the charger puts back after a run |
@@ -49,14 +51,16 @@ Calibrating the voltage: Mission Planner's "Measured battery voltage" box wouldn
 
 | Parameter | Value | Note |
 |---|---|---|
-| `BATT_FS_VOLTSRC` | 1 | Sag-compensated, so full-throttle bursts don't trigger it |
+| `BATT_FS_VOLTSRC` | **0** | Raw voltage (was 1, sag-compensated, changed 2026-10-16: the compensation estimates the pack's resistance from the current reading, which is noise). `BATT_LOW_TIMER` 10 s filters out full-throttle dips |
 | `BATT_LOW_VOLT` / `BATT_LOW_MAH` | 19.8 / **0** | 3.3 V per cell. mAh trigger off (2026-10-14) |
 | `BATT_LOW_TIMER` | 10 | Seconds |
 | `BATT_FS_LOW_ACT` | 1 | RTL |
-| `BATT_CRT_VOLT` / `BATT_CRT_MAH` | 18.6 / **0** | 3.1 V per cell. mAh trigger off (2026-10-14) |
+| `BATT_CRT_VOLT` / `BATT_CRT_MAH` | 18.6 / **0** | 3.1 V per cell. mAh trigger off (2026-10-14). On 2026-10-16 the boat was found with `BATT_CRT_VOLT` at **0** (critical failsafe off, probably zeroed with the mAh one); rewritten to 18.6 and read back |
 | `BATT_FS_CRT_ACT` | 1 | RTL too: stranded 180 m out is worse than one deeper discharge |
 
 - **Voltage only, on purpose.** The boat is switched off between drops, and ArduPilot's mAh count starts from zero at every power-up, so mAh triggers (and the HUD's battery %) would read far too full after the first drop. Read the HUD **voltage** before each drop instead.
-- The current sensor stays on: it gives live amps (fouled prop, the 30 A pack limit) and makes `BATT_FS_VOLTSRC` = 1 work.
+- ~~The current sensor stays on~~ **Current sensing off (2026-10-16, Cobus's call):** the boat casts and then sits, so mAh per drop isn't worth fixing the cable for. No live amps, no HUD %, no 30 A check from the HUD (use a DC clamp meter if ever needed). To bring it back: fix the adapter's pin 3, set `BATT_MONITOR` 4 and `BATT_FS_VOLTSRC` 1, then calibrate `BATT_AMP_OFFSET` and `BATT_AMP_PERVLT`.
 - **mAh used per drop:** Mission Planner, Data screen, Quick tab: double-click a box, tick `battery_usedmah`. It resets at power-up. Each power-up's DataFlash log keeps it as `BAT.CurrTot`, so a day's drops can be added up afterwards.
+- **⚠️ Current sensor not working (bench test, 2026-10-16).** Idle read 14-16 A, jumping ±4 A, with the motors still and cold. `BATT_AMP_OFFSET` set to **0.3793** (60 s average), which brought idle to about 0.6 A, but after a reboot it read −2.8 A. A step test (16 % and 32 % throttle in water) moved the voltage (24.48 → 24.39 V) but **not the current**, which stayed at −1 to −7 A noise throughout. The current input is reading no signal: check pin 3 (CURRENT) of the JST-GH to DF13 adapter for continuity and shorts, then pin 3 to GND voltage under load. Calibrate `BATT_AMP_PERVLT` only after it responds to throttle. **Decided 2026-10-16: not fixing it; current sensing switched off** (`BATT_MONITOR` 3).
+- **`ARMING_REQUIRE` = 0, on purpose (Cobus, 2026-10-16):** the boat is armed from power-on and the motors follow the throttle at once. With the RD-knob bench model on the transmitter, centre RD before powering up.
 - **Calibrating current from a day out:** new `BATT_AMP_PERVLT` = 36.364 × mAh the charger puts back ÷ total of the logs' final `CurrTot`. More accurate: a DC clamp meter on a battery lead at steady throttle, new = old × clamp ÷ HUD amps.
