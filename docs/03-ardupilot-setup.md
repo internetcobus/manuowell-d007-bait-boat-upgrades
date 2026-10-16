@@ -10,7 +10,7 @@ Settings for the brushless upgrade. The power module and battery sections were s
 | `SERVO3_FUNCTION` | 74 | Throttle right |
 | `SERVO1_MIN` / `TRIM` / `MAX` | 1000 / 1500 / 2000 | Same for `SERVO3_*` |
 | `MOT_PWM_TYPE` | 0 | Normal PWM |
-| `MOT_THR_MAX` | about 90 | A full 6S pack (25.2 V) is slightly over the thrusters' 24 V rating |
+| `MOT_THR_MAX` | **90** | A full 6S pack (25.2 V) is slightly over the thrusters' 24 V rating. Set 2026-10-16 (was 100) |
 
 Set both ESCs to bidirectional (3D) mode, with neutral at 1500 µs.
 
