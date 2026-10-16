@@ -19,13 +19,33 @@ The original plate also held the receiver antenna tube. That isn't a GPS part, s
 | Part | Size (mm) |
 |---|---|
 | Curved square pad | 17.0 × 14.0 × 2.7 |
-| Ring | 14.4 × 14.4 × 2.1 |
+| Ring | 14.4 × 14.4 × 2.1. **Replaced** by the WS2812D LED mount, see below |
 | Shaped washers with a hole (4) | about 14-17 × 14 × 2.2-4.4 |
 | Small washers (2) | 8.0 × 8.0 × 1.2 and 2.2 |
 
 Watertight mesh (no open edges). The plate is now 7.3 mm tall (it was 22 mm with the tube).
 
 **Print in TPU-95, solid.** In PLA+ these spacers wouldn't follow the curve, and the bracket would rock.
+
+## WS2812D LED mount (2026-10-16)
+
+The GPS status LED is now a WS2812D (see [battery LED indicator](../../docs/04-battery-led-indicator.md#neopixel-on-aux-5-fitted)), so Cobus redesigned the ring (circled in red) as `WS2812D LED Mount.stl`. The ring in `gps-antenna-spacer.stl` is the old part and is no longer printed.
+
+![The ring that was replaced, circled in red](renders/ring-replaced-by-led-mount.png)
+
+![WS2812D LED mount, measured from the STL](renders/ws2812d-led-mount-labelled.png)
+
+**Printed in solid TPU-95**, like the spacers (Cobus, 2026-10-16).
+
+Measured from the STL (one part, watertight):
+
+| Feature | Size (mm) |
+|---|---|
+| Bore, straight through | Ø7.9 |
+| Spigot | Ø12.4 × 4.34 tall |
+| Flange | Ø14.4 × 0.24, the same outside size as the old ring |
+| Bevel on top | 1 mm high, from the flange edge in to the bore |
+| Overall | 14.4 × 14.4 × 5.58 |
 
 ## Source
 
