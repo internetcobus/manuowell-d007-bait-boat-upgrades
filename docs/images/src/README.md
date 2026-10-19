@@ -7,3 +7,4 @@ PIL scripts that draw the battery-gauge pictures in `docs/images/`, so they can 
 - `python3 gauge_stack.py docs/images/gauge-stack.png` (side view of the stack)
 - `python3 gauge_wiring.py docs/images/gauge-wiring.png`
 - `python3 gauge_c3_harness.py docs/images/gauge-c3-harness.png` labels a copy of Cobus's photo `/mnt/hgfs/Temp/20261016_122206.jpg` (the photo itself is not in the repo)
+- `python3 pm06_current_filter.py docs/images/pm06-current-filter.png` (the 10k + 100 nF current filter that was tried on 2026-10-19 and did not help)
