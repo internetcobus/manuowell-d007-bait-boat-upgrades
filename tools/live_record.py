@@ -21,5 +21,6 @@ with open(out,'w',newline='') as fh:
                     s.servo1_raw if s else '',s.servo3_raw if s else '',c.chan3_raw if c else '',c.chan1_raw if c else '',
                     round(v.groundspeed,2) if v else '',v.throttle if v else '',b.voltage_battery/1000 if b else '',b.current_battery/100 if b else ''])
         n+=1
-        if n%100==0: fh.flush(); print('%.0fs rows %d pitch %.1f out1 %s'%(time.time()-t0,n,math.degrees(r.pitch),s.servo1_raw if s else '-'),flush=True)
+        if n%10==0: fh.flush()
+        if n%100==0: print('%.0fs rows %d pitch %.1f out1 %s'%(time.time()-t0,n,math.degrees(r.pitch),s.servo1_raw if s else '-'),flush=True)
 print('done',n)

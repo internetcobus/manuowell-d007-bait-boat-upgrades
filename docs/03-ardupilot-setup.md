@@ -8,13 +8,37 @@ Settings for the brushless upgrade. The power module and battery sections were s
 |---|---|---|
 | `SERVO1_FUNCTION` | 73 | Throttle left |
 | `SERVO3_FUNCTION` | 74 | Throttle right |
-| `SERVO1_MIN` / `TRIM` / `MAX` | 1000 / 1500 / 2000 | Same for `SERVO3_*` |
+| `SERVO1_MIN` / `TRIM` / `MAX` | 1100 / 1500 / 1900 | Same for `SERVO3_*` (read from the boat 2026-10-19; this table said 1000 / 2000 before) |
 | `MOT_PWM_TYPE` | 0 | Normal PWM |
-| `MOT_THR_MAX` | **90** | A full 6S pack (25.2 V) is slightly over the thrusters' 24 V rating. Set 2026-10-16 (was 100) |
+| `MOT_THR_MAX` | **50** | Set 2026-10-20 after the pool runs (was 90 from 2026-10-16, 100 before). CLIPS the throttle in every mode: Futaba, phone/QGC and missions (Rover 4.7.2 `AP_MotorsUGV::set_throttle`) |
+| `MOT_SLEWRATE` | **200** | %/s, set 2026-10-20 (was 0 = no limit). Softens the start so the bow lifts less: 0 to the 50 % limit in 0.25 s. 100 felt laggy; 200 "feels perfect" (Cobus) |
 
 Set both ESCs to bidirectional (3D) mode, with neutral at 1500 µs.
 
 **ESC calibration: not needed (2026-10-16).** Mission Planner's ESC Calibration button is ArduCopter-only (it gives an "AC3" error on Rover). Motor Test (Setup → Optional Hardware) ran both thrusters forward and reverse on the ESCs' default range, so they were left as they came. If one ever creeps at neutral or won't reverse, calibrate by hand: set `SERVO1_FUNCTION` and `SERVO3_FUNCTION` to 53 (RC3 passthrough), power the Pixhawk from USB with the safety switch on, hold the throttle stick at full while plugging in the battery, move it to full low after the beeps, then set them back to 73 / 74.
+
+## Throttle limit from the pool runs (2026-10-20)
+
+Recorded live over the SiK with [`tools/live_record.py`](../tools/live_record.py) (pitch, both outputs, RC, GPS speed, volts, amps at about 4 Hz) in a 12 m pool. Data: [`data/`](../data/). Speeds are pool speeds: the boat may not reach full speed in 12 m.
+
+![Empty: nose rise, power and speed](images/pool-run-2026-10-20.png)
+
+![Empty vs ~1 kg: nose angle and speed](images/pool-run-2026-10-20-compare.png)
+
+- **Hull speed is the limit.** Empty, the speed flattens around 1.0-1.3 m/s; loaded (~1 kg in the hoppers) it stops at about **0.9-1.0 m/s** however much throttle (`docs/02` estimated 0.9-1 m/s for this hull). Past that the boat climbs its own bow wave: the **nose rises and the power shoots up** (empty: 72 W at 40-49 % for ~1.0 m/s, 244 W at 70-79 % for ~1.35 m/s).
+- **The hoppers sit behind the balance point:** 1 kg in them lifts the nose about 6° at rest (−6° → 0°) and makes it climb further: loaded 26-31° at 60-79 % (peaks 33°) against 16-18° empty. Going out loaded is the steepest part of a drop.
+- **The Futaba end point (95 of 140) was about 66-70 % throttle**; a run from the phone (stick centred) reached 77 %. End points never limited phone or mission driving.
+- **At the limit, full stick** (medians; loaded / empty):
+
+| `MOT_THR_MAX` | Nose angle | Peak | Speed | Current |
+|---|---|---|---|---|
+| 45 | 12.8° / 3.5° | 14.0° / 5.2° | 0.90 / 1.04 m/s | 4.5 / 4.8 A |
+| **50 (kept)** | **15.2° / 6.4°** | **16.6° / 8.5°** | **1.02 / 1.06 m/s** | **5.8 / 5.9 A** |
+
+  Cobus kept 50: a bit more speed going out loaded. The amps here carry little radio offset (0.7 A at rest that day).
+- **Drops per charge (rough):** about 6 A at about 1 m/s; 4,300 mAh usable to the 19.8 V RTL with margin → about **12-13 drops at 100 m** out, **8-9 at 150 m**. Check against a real day out.
+- **The boat pulls left on the Futaba with the stick centred**, but both outputs are identical then (1617/1616, 1668/1666, 1764/1764 µs on straight runs), so it is physical: check the props are a mirrored pair (CW + CCW), weed or rubbing in a duct, thruster alignment, or match the ESCs by hand-calibrating (above). Cobus was holding about +25 µs of right steering.
+- **Next: bring the nose down** to gain efficiency and safety near hull speed: transom trim tabs (adjustable, ASA) and/or a few degrees of thruster tilt in the v2 carrier; compare with the same pool test at 50 %.
 
 ## Power module (Holybro PM06 V1) and battery
 
