@@ -10,7 +10,7 @@ Settings for the brushless upgrade. The power module and battery sections were s
 | `SERVO3_FUNCTION` | 74 | Throttle right |
 | `SERVO1_MIN` / `TRIM` / `MAX` | 1100 / 1500 / 1900 | Same for `SERVO3_*` (read from the boat 2026-10-19; this table said 1000 / 2000 before) |
 | `MOT_PWM_TYPE` | 0 | Normal PWM |
-| `MOT_THR_MAX` | **50** | Set 2026-10-20 after the pool runs (was 90 from 2026-10-16, 100 before). CLIPS the throttle in every mode: Futaba, phone/QGC and missions (Rover 4.7.2 `AP_MotorsUGV::set_throttle`) |
+| `MOT_THR_MAX` | **60** | 2026-10-20, with the 10° trim tab and 8° tilt carriers fitted (pool tests below; 50 before them, 90 from 2026-10-16, 100 before that). CLIPS the throttle in every mode: Futaba, phone/QGC and missions (Rover 4.7.2 `AP_MotorsUGV::set_throttle`) |
 | `MOT_SLEWRATE` | **200** | %/s, set 2026-10-20 (was 0 = no limit). Softens the start so the bow lifts less: 0 to the 50 % limit in 0.25 s. 100 felt laggy; 200 "feels perfect" (Cobus) |
 
 Set both ESCs to bidirectional (3D) mode, with neutral at 1500 µs.
@@ -41,7 +41,23 @@ Recorded live over the SiK with [`tools/live_record.py`](../tools/live_record.py
 - **Bringing the nose down (same day):**
   - **10° centre trim tab fitted** ([designs/trim](../designs/trim/), on the bases' inboard post screws, no new holes). At 50 %: loaded nose 15.2° → **13.4°**, empty 6.4° → **3.9°**, empty speed 1.06 → **1.18 m/s** at the same current (pool numbers, ±0.05 m/s noise). The flush and 5° tabs were not tested.
   - **55 % with the tab: not worth it.** Loaded no faster (0.97 m/s, the hull-speed wall), nose back to 15.5°, ~18 % more current; empty no faster in the median. Set back to **50 %**.
-  - **8° tilt carriers** printed ([thruster_tilt_carrier.scad](../designs/thruster-mount/thruster_tilt_carrier.scad)): fit them only when the motors come out anyway (the wires are sealed in with marine sealant). Estimate: ~40 % less nose-up push from the thrust.
+  - **8° tilt carriers fitted** (same day, [thruster_tilt_carrier.scad](../designs/thruster-mount/thruster_tilt_carrier.scad)), tab still on. **The biggest single gain:** at 50 % loaded nose 13.4° → **9.2°**, empty 3.9° → **0.7°** (nearly level, never bow-down), ~10 % less current.
+  - **Then traded for speed** (Cobus: more energy is fine if the nose stays down; loaded limit ~15°):
+
+| Full stick, loaded / empty | Nose | Speed (m/s) | Current (A) | Drops at 100 m (rough) |
+|---|---|---|---|---|
+| Original: no tab, 50 % | 15.2° / 6.4° | 1.02 / 1.06 | 5.8 / 5.9 | ~12-13 |
+| Tab + tilt, 50 % | 9.2° / 0.7° | 0.92 / 1.18 | 5.3 / 5.4 | ~13 |
+| **Tab + tilt, 60 % (kept)** | **12.3° / 5.0°** | **1.10 / 1.29** | **7.7 / 7.6** | **~11** |
+| Tab + tilt, 65 % | 14.6° / 6.9° (peaks 17.7°) | 1.15 / 1.43 | 9.5 / 9.1 | ~9-10 |
+
+  **Kept 60 %:** loaded 8 % faster and empty 22 % faster than the original setup, with the loaded nose 3° LOWER, leaving margin for wind. 65 % spends that margin for 5 % more loaded speed (the hull-speed wall again). Drops scale with current ÷ speed (energy per metre), see the chart. Battery sagged to 21.5 V by the last set.
+
+![All pool setups](images/pool-setups-2026-10-20.png)
+
+![Speed progress from stock](images/speed-progress-2026-10-20.png)
+
+Stock 0.8 m/s is Cobus's figure (docs/01 had about 0.7 m/s loaded). Loaded is now +38 % on stock with the nose lower than at any earlier setup; the docs/02 goal of ~1 m/s loaded outbound is met.
 
 ![Trim tab test](images/pool-tab-2026-10-20.png)
 

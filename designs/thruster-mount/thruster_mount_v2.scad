@@ -133,7 +133,7 @@ m4_clear = 4.4;
 m4_csk_d = 8.4;
 m4_csk_h = 2.4;
 
-/* [Side lock screw: M3 x 30 + Nyloc nut] */
+/* [Side lock screw: M3 x 30 + plain M3 nut (was Nyloc)] */
 lock_y   = 6;      // in the 15 mm at the aft end where the carrier has no foot
 lock_z   = -drop / 2;
 lock_d   = 3.4;
@@ -143,8 +143,11 @@ lock_cb  = 4.0;    // head counterbore into the base's side face (DIN 912 head i
                    // pocket (4.5 -> 0.8, 5 -> 0.5: too thin)
 lock_l   = 30;     // screw length bought. Cobus, 2026-10-11: no stainless M3 x 40
                    // to be found in SA; Xtrude 3D has stainless M3 x 30
-nut_af   = 5.5;  nut_t = 4.0;   // M3 Nyloc (DIN 985), stainless. Cobus, 2026-10-11:
-                                 // Nyloc rather than Loctite, which attacks ABS
+nut_type = "plain";   // "plain" | "nyloc". Cobus, 2026-10-20: a normal M3 nut
+                      // (DIN 934, 2.4 thick) with a little threadlocker on the
+                      // bolt, instead of the Nyloc (DIN 985, 4.0) chosen 2026-10-11.
+                      // Threadlocker can stress-crack ABS: keep it off the plastic
+nut_af   = 5.5;  nut_t = (nut_type == "nyloc") ? 4.0 : 2.4;
 nut_x    = 4.5;    // nut slot centre from the carrier's centreline, + = outboard
                    // (was -4, past the centre, which needed an M3 x 40)
 
@@ -171,7 +174,7 @@ cover_y  = wire_y + cover_past;
 sx = (side == "right") ? 1 : -1;   // the outboard side (lock screw)
 inb = -sx;                          // the inboard side (the step)
 nut_cw   = nut_af / cos(30);                        // nut across corners, 6.35
-lock_len = wing - lock_cb - nut_x + nut_t / 2 + 0.5;  // head seat to 0.5 past the Nyloc's face
+lock_len = wing - lock_cb - nut_x + nut_t / 2 + 0.5;  // head seat to 0.5 past the nut's face
 
 // --- checks -----------------------------------------------------------------
 assert(cover_past >= wire_d / 2 + 3, "cover ends too close to the wire hole");
