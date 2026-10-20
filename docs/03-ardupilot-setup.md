@@ -38,7 +38,12 @@ Recorded live over the SiK with [`tools/live_record.py`](../tools/live_record.py
   Cobus kept 50: a bit more speed going out loaded. The amps here carry little radio offset (0.7 A at rest that day).
 - **Drops per charge (rough):** about 6 A at about 1 m/s; 4,300 mAh usable to the 19.8 V RTL with margin → about **12-13 drops at 100 m** out, **8-9 at 150 m**. Check against a real day out.
 - **The boat pulls left on the Futaba with the stick centred**, but both outputs are identical then (1617/1616, 1668/1666, 1764/1764 µs on straight runs), so it is physical: check the props are a mirrored pair (CW + CCW), weed or rubbing in a duct, thruster alignment, or match the ESCs by hand-calibrating (above). Cobus was holding about +25 µs of right steering.
-- **Next: bring the nose down** to gain efficiency and safety near hull speed: transom trim tabs (adjustable, ASA) and/or a few degrees of thruster tilt in the v2 carrier; compare with the same pool test at 50 %.
+- **Bringing the nose down (same day):**
+  - **10° centre trim tab fitted** ([designs/trim](../designs/trim/), on the bases' inboard post screws, no new holes). At 50 %: loaded nose 15.2° → **13.4°**, empty 6.4° → **3.9°**, empty speed 1.06 → **1.18 m/s** at the same current (pool numbers, ±0.05 m/s noise). The flush and 5° tabs were not tested.
+  - **55 % with the tab: not worth it.** Loaded no faster (0.97 m/s, the hull-speed wall), nose back to 15.5°, ~18 % more current; empty no faster in the median. Set back to **50 %**.
+  - **8° tilt carriers** printed ([thruster_tilt_carrier.scad](../designs/thruster-mount/thruster_tilt_carrier.scad)): fit them only when the motors come out anyway (the wires are sealed in with marine sealant). Estimate: ~40 % less nose-up push from the thrust.
+
+![Trim tab test](images/pool-tab-2026-10-20.png)
 
 ## Power module (Holybro PM06 V1) and battery
 

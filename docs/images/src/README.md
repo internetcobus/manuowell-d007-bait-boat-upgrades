@@ -10,3 +10,4 @@ PIL scripts that draw the battery-gauge pictures in `docs/images/`, so they can 
 - `python3 pm06_current_filter.py docs/images/pm06-current-filter.png` (the 10k + 100 nF current filter that was tried on 2026-10-19 and did not help)
 - `python3 pool_run_chart.py data/2026-10-20-pool-run.csv docs/images/pool-run-2026-10-20.png` (empty pool run: nose rise, power, speed by throttle)
 - `python3 pool_run_compare.py data/2026-10-20-pool-run.csv data/2026-10-20-pool-run-1kg.csv docs/images/pool-run-2026-10-20-compare.png` (nose angle and speed, empty vs ~1 kg)
+- `python3 pool_tab_compare.py docs/images/pool-tab-2026-10-20.png` (trim tab test: nose, speed, current; no tab / 10° tab at 50 % / at 55 %)

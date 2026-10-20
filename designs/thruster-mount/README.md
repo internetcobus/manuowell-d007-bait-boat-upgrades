@@ -178,3 +178,7 @@ Every value marked `VERIFY` in `thruster_mount.scad` is an assumption:
 - **Why sealant, not an O-ring:** the sealant also stops the pylon twisting, and it copes with a hull that isn't perfectly flat. Sealant on the face plus the rubber washer inside the hull do the sealing.
 - **Footprint:** 50 × 18 mm, long enough for the outer screw pair, with rounded ends to keep it streamlined.
 - **If a pylon still twists:** set `pin_d` (e.g. 3.2) to add a locating pin. That needs one small new hole in the hull.
+
+## Tilt carriers (2026-10-20, printed, not fitted)
+
+[`thruster_tilt_carrier.scad`](thruster_tilt_carrier.scad): drop-in v2 carriers that hold the thruster with its rear end **8° deeper** (Cobus's choice; 3° and 6° also exported), so the jet pushes slightly down and lifts the stern. Same dovetail, lock screw and M4 foot screws; the foot pocket and holes rotate about the foot's front end, and a wedge "shoe" (9.2 mm at the stern end at 8°) keeps its full 7 mm grip. Forward push kept: 99.0 %. STLs: `v2/v2_carrier_tilt{3,6,8}_{left,right}.stl`; render `v2/renders/tilt_compare_labelled.png`. **Fit only when the motors come out anyway:** the motor wires are sealed in with marine sealant (Cobus, 2026-10-20). Then check the prop spins free and the duct's rear rim clears the hull bottom, and re-run the pool test at 50 %.
